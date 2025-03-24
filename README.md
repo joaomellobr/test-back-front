@@ -86,3 +86,23 @@ If a different port is shown in the terminal, use that one instead.
 - Well-structured and reusable components
 
 ---
+
+## ✅ Development Enhancements
+- Add Git hooks with Husky
+- Automatically run linting and tests before commits and pushes to prevent bad code from reaching the repository.
+- Achieve 95%+ Test Coverage
+- Add unit and integration tests for all major components, reducers, hooks, and services.
+- Add Prettier integration
+- Ensure consistent code formatting across the team and automated formatting with lint-staged.
+- Enable automatic code analysis with GitHub Actions (CI/CD)
+- Automate test execution, coverage, and linting on every pull request.
+- Add an .editorconfig file
+- Define consistent indentation, charset, and line endings across all editors.
+- Use absolute imports
+- Improve readability by avoiding long relative paths in imports.
+- Create a reusable form system or hook
+- For components like the editable modal, consider extracting logic into a reusable useForm hook or similar.
+- Improve error boundary handling
+- Wrap the app in an error boundary to catch unexpected runtime errors gracefully.
+- Add accessibility (a11y) best practices
+- Labels, focus management in modals, proper button semantics, etc.
