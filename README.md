@@ -57,6 +57,8 @@ Access the Swagger: http://localhost:8000/swagger/index.html
 ---
 
 ### 2️⃣ Frontend (React + TypeScript + Vite + Yarn)
+💡 If you don’t have Yarn installed yet, you can install it globally with:
+`npm install --global yarn`
 
 ```bash
 cd frontend
