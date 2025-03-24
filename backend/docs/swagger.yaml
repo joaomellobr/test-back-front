@@ -1,0 +1,43 @@
+definitions:
+  models.Timesheet:
+    properties:
+      billable:
+        type: boolean
+      billable_rate:
+        type: number
+      client:
+        type: string
+      date:
+        type: string
+      first_name:
+        type: string
+      hours:
+        type: number
+      id:
+        type: integer
+      last_name:
+        type: string
+      project:
+        type: string
+      project_code:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /entries:
+    get:
+      description: Returns all entries from the database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Timesheet'
+            type: array
+      summary: List all timesheet entries
+      tags:
+      - entries
+swagger: "2.0"

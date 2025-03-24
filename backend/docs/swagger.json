@@ -1,0 +1,68 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/entries": {
+            "get": {
+                "description": "Returns all entries from the database",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "entries"
+                ],
+                "summary": "List all timesheet entries",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Timesheet"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Timesheet": {
+            "type": "object",
+            "properties": {
+                "billable": {
+                    "type": "boolean"
+                },
+                "billable_rate": {
+                    "type": "number"
+                },
+                "client": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "hours": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                },
+                "project_code": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
