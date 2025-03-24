@@ -1,4 +1,9 @@
 definitions:
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
   models.Timesheet:
     properties:
       billable:
@@ -22,6 +27,24 @@ definitions:
       project_code:
         type: string
     type: object
+  models.TimesheetSummary:
+    properties:
+      billable_amount:
+        example: 3040
+        type: number
+      billable_hours:
+        example: 38
+        type: number
+      client:
+        example: Olith
+        type: string
+      hours:
+        example: 42.5
+        type: number
+      name:
+        example: Pharos
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -40,4 +63,74 @@ paths:
       summary: List all timesheet entries
       tags:
       - entries
+    post:
+      consumes:
+      - application/json
+      description: Add a new timesheet entry to the database
+      parameters:
+      - description: New timesheet entry
+        in: body
+        name: entry
+        required: true
+        schema:
+          $ref: '#/definitions/models.Timesheet'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Timesheet'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Create a new timesheet entry
+      tags:
+      - entries
+  /entries/{client}:
+    get:
+      description: Returns all timesheet entries for a specific client
+      parameters:
+      - description: Client name
+        in: path
+        name: client
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Timesheet'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get entries by client
+      tags:
+      - entries
+  /summary:
+    get:
+      description: Returns aggregated hours and billable amounts grouped by client
+        and project
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.TimesheetSummary'
+            type: array
+      summary: Get timesheet summary
+      tags:
+      - summary
 swagger: "2.0"

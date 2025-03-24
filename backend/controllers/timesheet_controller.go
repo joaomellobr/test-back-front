@@ -62,3 +62,53 @@ func GetSummary(c *gin.Context) {
 
 	c.JSON(http.StatusOK, summaryList)
 }
+
+// CreateEntry godoc
+// @Summary Create a new timesheet entry
+// @Description Add a new timesheet entry to the database
+// @Tags entries
+// @Accept json
+// @Produce json
+// @Param entry body models.Timesheet true "New timesheet entry"
+// @Success 201 {object} models.Timesheet
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 500 {object} models.ErrorResponse
+// @Router /entries [post]
+func CreateEntry(c *gin.Context) {
+	var entry models.Timesheet
+
+	if err := c.ShouldBindJSON(&entry); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	result := database.DB.Create(&entry)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, entry)
+}
+
+// GetByClient godoc
+// @Summary Get entries by client
+// @Description Returns all timesheet entries for a specific client
+// @Tags entries
+// @Produce json
+// @Param client path string true "Client name"
+// @Success 200 {array} models.Timesheet
+// @Failure 500 {object} models.ErrorResponse
+// @Router /entries/{client} [get]
+func GetByClient(c *gin.Context) {
+	client := c.Param("client")
+	var entries []models.Timesheet
+
+	result := database.DB.Where("client = ?", client).Find(&entries)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, entries)
+}

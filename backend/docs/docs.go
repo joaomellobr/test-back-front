@@ -36,10 +36,123 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "description": "Add a new timesheet entry to the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "entries"
+                ],
+                "summary": "Create a new timesheet entry",
+                "parameters": [
+                    {
+                        "description": "New timesheet entry",
+                        "name": "entry",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Timesheet"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Timesheet"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/entries/{client}": {
+            "get": {
+                "description": "Returns all timesheet entries for a specific client",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "entries"
+                ],
+                "summary": "Get entries by client",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Client name",
+                        "name": "client",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Timesheet"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/summary": {
+            "get": {
+                "description": "Returns aggregated hours and billable amounts grouped by client and project",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "summary"
+                ],
+                "summary": "Get timesheet summary",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TimesheetSummary"
+                            }
+                        }
+                    }
+                }
             }
         }
     },
     "definitions": {
+        "models.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Timesheet": {
             "type": "object",
             "properties": {
@@ -72,6 +185,31 @@ const docTemplate = `{
                 },
                 "project_code": {
                     "type": "string"
+                }
+            }
+        },
+        "models.TimesheetSummary": {
+            "type": "object",
+            "properties": {
+                "billable_amount": {
+                    "type": "number",
+                    "example": 3040
+                },
+                "billable_hours": {
+                    "type": "number",
+                    "example": 38
+                },
+                "client": {
+                    "type": "string",
+                    "example": "Olith"
+                },
+                "hours": {
+                    "type": "number",
+                    "example": 42.5
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Pharos"
                 }
             }
         }
