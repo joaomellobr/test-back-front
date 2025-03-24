@@ -28,7 +28,6 @@ const SummaryTable: React.FC<Props> = ({ data }) => (
         <TableCell as="th" align="right">Hours</TableCell>
         <TableCell as="th" align="right">Billable Hours</TableCell>
         <TableCell as="th" align="right">Billable Amount</TableCell>
-        <TableCell as="th" align="right"></TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
@@ -53,10 +52,6 @@ const SummaryTable: React.FC<Props> = ({ data }) => (
                     currency: 'USD'
                 })}
             </TableCell>
-            <TableCell>
-                <button onClick={() => {}}>View Details</button>
-            </TableCell>
-
         </TableRow>
       ))}
     </TableBody>

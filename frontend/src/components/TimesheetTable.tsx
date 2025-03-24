@@ -8,10 +8,9 @@ import { TimesheetSummary } from '../types';
 
 interface Props {
   entries: TimesheetSummary[];
-  onDelete: (id: number) => void;
 }
 
-const TimesheetTable: React.FC<Props> = ({ entries, onDelete }) => {
+const TimesheetTable: React.FC<Props> = ({ entries }) => {
   return (
     <Table>
       <TableHead >
